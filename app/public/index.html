@@ -9,6 +9,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <title>D&S HW #1: Git & HTML Review Home Page</title>
   <link rel="stylesheet" href="css/mystyle.css">
+  <script src="https://unpkg.com/vue@next"></script>
 </head>
 <body>
   <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
@@ -24,14 +25,14 @@
       </li>
     </ul>
   </nav>          
-    <a href="img/profilepic.jpg"><img src="img/profilepic.jpg" class="rounded-circle" alt="Sandra White" width="5%" height="5%"></a> 
-    <center><a href="https://randomuser.me/" class="citation">Source</a></center>
-    <h1 id="sandra">This is Sandra's information</h1>
-  <div class="container p-3 my-3 bg-dark text-white">
-    <h1>Sandra White</h1>
-    <p>Country: United States of America</p>
-    <p>Birthdate: 12/25/1998</p>
-    <p>Email Address: <a href="mailto:abc123@email.com">abc123@email.com</a></p>
+    <h1 id="sandra">This is Random User's information</h1>
+  <div class="container p-3 my-3 bg-dark text-white" id="someApp">
+    <img v-bind:src="result.picture.large" alt="person" onclick="window.open('https://randomuser.me/', '_blank')">
+    <h1> {{ result.name.first }} {{ result.name.last }}</h1>
+    <p> Country: {{ result.location.country }}</p>
+    <p> Birthday: {{ result.dob.date }}</p>
+    <p> Email: <a v-bind:href="'mailto:' +result.email"> {{ result.email }}</a></p>
   </div>
+  <script src="js/index.js"></script>
 </body>
 </html>
