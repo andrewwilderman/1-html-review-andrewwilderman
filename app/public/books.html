@@ -30,20 +30,20 @@
           <tr>
             <th scope="col">Title</th>
             <th scope="col">Author</th>
-            <th scope="col">Publisher</th>
             <th scope="col">Year Published</th>
+            <th scope="col">Publisher</th>
             <th scope="col">Page Count</th>
             <th scope="col">MSRP</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>D&S</td>
-            <td>Mr. Person</td>
-            <td>2021</td>
-            <td>MSIS</td>
-            <td>50000</td>
-            <td>$1000</td>
+            <td>{{ books.title }}</td>
+            <td>{{ books.author }}</td>
+            <td>{{ books.year_published }}</td>
+            <td>{{ books.publisher }}}</td>
+            <td>{{ books.pagenumber }}</td>
+            <td>{{ prettyDollar(books.msrp) }}</td>
           </tr>
           <tr>
             <td>ERP</td>
