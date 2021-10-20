@@ -24,7 +24,8 @@
       </li>
     </ul>
   </nav>
-  <br>        
+  <br> 
+  <div id="offerApp">       
     <table id="taskTable"class="table table-dark">
         <thead>
           <tr>
@@ -37,73 +38,56 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>{{ books.title }}</td>
-            <td>{{ books.author }}</td>
-            <td>{{ books.year_published }}</td>
-            <td>{{ books.publisher }}}</td>
-            <td>{{ books.pagenumber }}</td>
-            <td>{{ prettyDollar(books.msrp) }}</td>
-          </tr>
-          <tr>
-            <td>ERP</td>
-            <td>Mr. Man</td>
-            <td>2020</td>
-            <td>MSF</td>
-            <td>20000</td>
-            <td>$15000</td>
-          </tr>
-          <tr>
-            <td>ITA</td>
-            <td>Ms. Person</td>
-            <td>2019</td>
-            <td>MBA</td>
-            <td>30000</td>
-            <td>$750</td>
-          </tr>
-          <tr>
-            <td>ITSCA</td>
-            <td>Ms. Woman</td>
-            <td>2018</td>
-            <td>MSHM</td>
-            <td>2</td>
-            <td>$48</td>
+          <tr v-for="bk in books">
+            <td>{{ bk.title }}</td>
+            <td>{{ bk.author }}</td>
+            <td>{{ bk.year_published }}</td>
+            <td>{{ bk.publisher }}</td>
+            <td>{{ bk.pagenumber }}</td>
+            <td>{{ prettyDollar(bk.msrp) }}</td>
           </tr>
         </tbody>
       </table>
-      
-  <h2>Add a book</h2>
-  <form>
+      <h2>Add a book</h2>
+    <form v-on:submit.prevent="postNewBook">
     <div class="form-group">
       <label for="title">Title:</label>
-      <input type="text" class="form-control" id="title" placeholder="Book Title" name="title">
+      <input type="text" v-model="booksForm.title" class="form-control" id="title" placeholder="Book Title" name="title">
     </div>
     <div class="form-group">
       <label for="author">Author:</label>
-      <input type="text" class="form-control" id="author" placeholder="Author Name" name="author">
+      <input type="text" v-model="booksForm.author" class="form-control" id="author" placeholder="Author Name" name="author">
     </div>
     <div class="form-group">
       <label for="publisher">Publisher:</label>
-      <input type="text" class="form-control" id="publisher" placeholder="Publisher" name="publisher">
+      <input type="text" v-model="booksForm.publisher" class="form-control" id="publisher" placeholder="Publisher" name="publisher">
     </div>
     <div class="form-group">
-      <label for="yearpublished">Year Published:</label>
-      <input type="number" class="form-control" id="yearpublished" placeholder="Year" name="yearpublished">
+      <label for="year_published">Year Published:</label>
+      <input type="number" v-model="booksForm.year_published" class="form-control" id="year_published" placeholder="Year" name="yearpublished">
     </div>
     <div class="form-group">
-      <label for="pagecount">Page Count:</label>
-      <input type="text" class="form-control" id="pagecount" placeholder="#" name="pagecount">
+      <label for="pagenumber">Page Count:</label>
+      <input type="text" v-model="booksForm.pagenumber" class="form-control" id="pagenumber" placeholder="#" name="pagenumber">
     </div>
     <div class="form-group">
       <label for="msrp">MSRP:</label>
-      <input type="text" class="form-control" id="msrp" placeholder="MSRP" name="msrp">
+      <input type="text" v-model="booksForm.msrp" class="form-control" id="msrp" placeholder="MSRP" name="msrp">
     </div>
     
     
-    <button type="button" class="btn btn-dark">Submit</button>
-  </form>
-</div>
+    <button type="submit" class="btn btn-dark">Submit</button>
+    </form>
+  </div>
+    
+      
+  
+
 <script src="js/tablesort.min.js"></script>
+<script src="https://unpkg.com/vue@next"></script>
+<script src="js/index.js"></script>
+
+
 <script>
   // Tablesort plugin from http://tristen.ca/tablesort/demo/ 
   new Tablesort(document.getElementById('taskTable'));

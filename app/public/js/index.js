@@ -2,6 +2,7 @@ const SomeApp = {
     data() {
       return {
         books: [],
+        booksForm: {}
       }
     },
     computed: {},
@@ -20,23 +21,50 @@ const SomeApp = {
             .catch( (err) => {
                 console.error(err);
             })
-        },
-        fetchUserData(){
-            fetch('https://randomuser.me/api/')
-            .then( response => response.json() )
-            .then( (responseJson) => {
-                this.person = responseJson.results[0];
-            })
             .catch( (err) => {
-                console.error(err);
-            })
-            }
-        
-    },
+              console.error(error);
+            });
+        },
+        postNewBook(evt) {
+            //this.offerForm.studentId = this.selectedStudent.id;        
+            
+            console.log("Posting:", this.booksForm);
 
-    created() {
+            fetch('api/books/create.php', {
+                method:'POST',
+                body: JSON.stringify(this.booksForm),
+                headers: {
+                  "Content-Type": "application/json; charset=utf-8",
+                }
+              })
+              .then( response => response.json() )
+              .then( json => {
+                console.log("Returned from post:", json);
+                // TODO: test a result was returned!
+                this.books = json;
+                
+                // reset the form
+                this.booksForm = {};
+              });
+          }
+      },
+      created() {
         this.fetchBookData();
     }
 }
   
   Vue.createApp(SomeApp).mount('#offerApp');
+        // fetchUserData(){
+        //     fetch('https://randomuser.me/api/')
+        //     .then( response => response.json() )
+        //     .then( (responseJson) => {
+        //         this.person = responseJson.results[0];
+        //     })
+        //     .catch( (err) => {
+        //         console.error(err);
+        //     })
+        //     }
+        
+    
+
+    
