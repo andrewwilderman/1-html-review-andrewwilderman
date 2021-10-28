@@ -2,7 +2,8 @@ const SomeApp = {
     data() {
       return {
         books: [],
-        booksForm: {}
+        booksForm: {}, 
+        selectedBook: null
       }
     },
     computed: {},
@@ -24,6 +25,64 @@ const SomeApp = {
             .catch( (err) => {
               console.error(error);
             });
+        },
+        postEditBook(evt) {
+          this.booksForm.id = this.selectedBook.id;     
+          
+          console.log("Updating!", this.booksForm);
+  
+          fetch('api/books/update.php', {
+              method:'POST',
+              body: JSON.stringify(this.booksForm),
+              headers: {
+                "Content-Type": "application/json; charset=utf-8"
+              }
+            })
+            .then( response => response.json() )
+            .then( json => {
+              console.log("Returned from post:", json);
+              // TODO: test a result was returned!
+              this.books = json;
+              
+              this.handleResetEditBook();
+            });
+        },
+        postDeleteBook(bk) {
+          if (!confirm("Are you sure you want to delete the book from "+bk.title+"?")) {
+              return;
+          }
+          
+          fetch('api/books/delete.php', {
+              method:'POST',
+              body: JSON.stringify(bk),
+              headers: {
+                "Content-Type": "application/json; charset=utf-8"
+              }
+            })
+            .then( response => response.json() )
+            .then( json => {
+              console.log("Returned from post:", json);
+              // TODO: test a result was returned!
+              this.books = json;
+              
+              this.handleResetEditBook();
+            });
+        },
+        handleEditBook(book) {
+          console.log("selecting", book);
+          this.selectedBook = book;
+          this.booksForm = Object.assign({}, this.selectedBook);
+        },
+        handleResetEditBook() {
+          this.selectedBook = null;
+          this.booksForm = {};
+        },
+        postBook(evt) {
+          if (this.selectedBook === null) {
+              this.postEditBook(evt);
+          } else {
+              this.postNewBook(evt);
+          }
         },
         postNewBook(evt) {
             //this.offerForm.studentId = this.selectedStudent.id;        
